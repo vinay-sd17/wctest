@@ -43,3 +43,52 @@ private List<Product> getProductsFromService(List<Long> ids) {
         }).join();
         return products.get();
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+import java.util.Random;
+import org.springframework.stereotype.Component;
+
+@Component
+public class CustomIdGenerator {
+
+    private static final int MIN = 1000000;
+    private static final int MAX = 9999999;
+    private static final Random random = new Random();
+
+    public Long generateId() {
+        return (long) (random.nextInt((MAX - MIN) + 1) + MIN);
+    }
+}
+
+
+
+@Autowired
+    private CustomIdGenerator customIdGenerator;
+
+    @Transactional
+    public MyEntity createMyEntity(MyEntity entity) {
+        Long id;
+        do {
+            id = customIdGenerator.generateId();
+        } while (myEntityRepository.existsById(id));
+        entity.setId(id);
+        return myEntityRepository.save(entity);
+    }
+
+

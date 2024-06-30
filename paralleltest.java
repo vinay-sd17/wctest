@@ -39,3 +39,71 @@ public class ProcessServiceTest {
         verify(yourService).saveHistory(history);
     }
 }
+
+
+
+
+
+
+
+
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
+
+import static org.mockito.Mockito.verify;
+
+@SpringBootTest
+public class YourServiceTest {
+
+    @Mock
+    private UserRepository userRepo;
+
+    @Mock
+    private ArticleRepository articleRepo;
+
+    @Mock
+    private HistoryRepository historyRepo;
+
+    @InjectMocks
+    private YourService yourService;
+
+    @BeforeEach
+    public void setUp() {
+        MockitoAnnotations.openMocks(this);
+        ThreadPoolTaskExecutor taskExecutor = new ThreadPoolTaskExecutor();
+        taskExecutor.setCorePoolSize(10);
+        taskExecutor.setMaxPoolSize(50);
+        taskExecutor.setQueueCapacity(100);
+        taskExecutor.setThreadNamePrefix("Async-");
+        taskExecutor.initialize();
+        yourService = new YourService();
+    }
+
+    @Test
+    public void testSaveUser() {
+        User user = new User();
+        yourService.saveUser(user);
+        verify(userRepo).save(user);
+    }
+
+    @Test
+    public void testSaveArticle() {
+        Article article = new Article();
+        yourService.saveArticle(article);
+        verify(articleRepo).save(article);
+    }
+
+    @Test
+    public void testSaveHistory() {
+        History history = new History();
+        yourService.saveHistory(history);
+        verify(historyRepo).save(history);
+    }
+}
+

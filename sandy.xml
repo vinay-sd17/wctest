@@ -1,0 +1,202 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Alts ECTA Architecture" id="alts-ecta">
+    <mxGraphModel dx="1422" dy="794" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1200" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        
+        <!-- EKS Cluster Container -->
+        <mxCell id="eks-container" value="EKS Cluster - Spring Application" style="swimlane;whiteSpace=wrap;html=1;fillColor=#E3F2FD;strokeColor=#1976D2;fontStyle=1;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="40" y="40" width="1520" height="700" as="geometry" />
+        </mxCell>
+        
+        <!-- Main Flow Container -->
+        <mxCell id="main-flow" value="Main Flow: Kafka Listener" style="swimlane;whiteSpace=wrap;html=1;fillColor=#E8F4F8;strokeColor=#4A90E2;fontStyle=1;fontSize=12;" vertex="1" parent="eks-container">
+          <mxGeometry x="20" y="40" width="1480" height="280" as="geometry" />
+        </mxCell>
+        
+        <!-- Kafka Topic -->
+        <mxCell id="kafka" value="Kafka Topic&lt;br&gt;APS - Alts eSign" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#4A90E2;strokeColor=#1565C0;fontColor=#FFFFFF;fontStyle=1;" vertex="1" parent="main-flow">
+          <mxGeometry x="40" y="80" width="120" height="100" as="geometry" />
+        </mxCell>
+        
+        <!-- Step 0 -->
+        <mxCell id="step0" value="&lt;b&gt;Step 0&lt;/b&gt;&lt;br&gt;Consume Message&lt;br&gt;&lt;br&gt;Retry: 3x&lt;br&gt;Fail: End" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#BBDEFB;strokeColor=#1976D2;fontSize=11;" vertex="1" parent="main-flow">
+          <mxGeometry x="220" y="80" width="140" height="100" as="geometry" />
+        </mxCell>
+        
+        <!-- Step 1 -->
+        <mxCell id="step1" value="&lt;b&gt;Step 1&lt;/b&gt;&lt;br&gt;Persist Event to DB&lt;br&gt;&lt;br&gt;Retry: 3x&lt;br&gt;Fail: End" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#BBDEFB;strokeColor=#1976D2;fontSize=11;" vertex="1" parent="main-flow">
+          <mxGeometry x="420" y="80" width="140" height="100" as="geometry" />
+        </mxCell>
+        
+        <!-- Step 2 -->
+        <mxCell id="step2" value="&lt;b&gt;Step 2&lt;/b&gt;&lt;br&gt;Retrieve Signed Doc&lt;br&gt;&lt;br&gt;• Get ECTA Auth Token&lt;br&gt;• Call ECTA API&lt;br&gt;&lt;br&gt;Retry: 3x each&lt;br&gt;Fail: Reprocess Queue" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#BBDEFB;strokeColor=#1976D2;fontSize=11;align=left;spacingLeft=10;" vertex="1" parent="main-flow">
+          <mxGeometry x="620" y="60" width="180" height="140" as="geometry" />
+        </mxCell>
+        
+        <!-- Step 3 -->
+        <mxCell id="step3" value="&lt;b&gt;Step 3&lt;/b&gt;&lt;br&gt;Upload Signed Doc&lt;br&gt;&lt;br&gt;• Get FIMS Auth Token&lt;br&gt;• Upload to FIMS&lt;br&gt;&lt;br&gt;Retry: 3x each&lt;br&gt;Fail: Reprocess Queue" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#BBDEFB;strokeColor=#1976D2;fontSize=11;align=left;spacingLeft=10;" vertex="1" parent="main-flow">
+          <mxGeometry x="860" y="60" width="180" h="140" as="geometry" />
+        </mxCell>
+        
+        <!-- Step 4 -->
+        <mxCell id="step4" value="&lt;b&gt;Step 4&lt;/b&gt;&lt;br&gt;Persist Final Updates&lt;br&gt;&lt;br&gt;• FIMS_AL_XREF table&lt;br&gt;• T_EDOC_TRANSM table&lt;br&gt;&lt;br&gt;Retry: 3x each&lt;br&gt;Fail: Support Team" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#BBDEFB;strokeColor=#1976D2;fontSize=11;align=left;spacingLeft=10;" vertex="1" parent="main-flow">
+          <mxGeometry x="1100" y="60" width="180" height="140" as="geometry" />
+        </mxCell>
+        
+        <!-- Arrows for Main Flow -->
+        <mxCell id="arrow1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#1976D2;" edge="1" parent="main-flow" source="kafka" target="step0">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#1976D2;" edge="1" parent="main-flow" source="step0" target="step1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#1976D2;" edge="1" parent="main-flow" source="step1" target="step2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#1976D2;" edge="1" parent="main-flow" source="step2" target="step3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#1976D2;" edge="1" parent="main-flow" source="step3" target="step4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <!-- Reprocessing Flow Container -->
+        <mxCell id="reproc-flow" value="Reprocessing Flow: Scheduled Task (Hourly - 3hrs)" style="swimlane;whiteSpace=wrap;html=1;fillColor=#FFF4E6;strokeColor=#F39C12;fontStyle=1;fontSize=12;" vertex="1" parent="eks-container">
+          <mxGeometry x="20" y="360" width="1480" height="280" as="geometry" />
+        </mxCell>
+        
+        <!-- Scheduled Job -->
+        <mxCell id="cron" value="⏰ Scheduled Job&lt;br&gt;Runs Every Hour" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F39C12;strokeColor=#E67E22;fontColor=#FFFFFF;fontStyle=1;fontSize=11;" vertex="1" parent="reproc-flow">
+          <mxGeometry x="40" y="80" width="140" height="100" as="geometry" />
+        </mxCell>
+        
+        <!-- Lock & Identify -->
+        <mxCell id="lock" value="Lock &amp; Identify&lt;br&gt;Failed Records" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFE0B2;strokeColor=#F39C12;fontSize=11;" vertex="1" parent="reproc-flow">
+          <mxGeometry x="240" y="80" width="140" height="100" as="geometry" />
+        </mxCell>
+        
+        <!-- Enrich Data -->
+        <mxCell id="enrich" value="&lt;b&gt;Enrich Data&lt;/b&gt;&lt;br&gt;&lt;br&gt;Retry: 3x&lt;br&gt;Fail: Reprocess +1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFE0B2;strokeColor=#F39C12;fontSize=11;" vertex="1" parent="reproc-flow">
+          <mxGeometry x="440" y="80" width="140" height="100" as="geometry" />
+        </mxCell>
+        
+        <!-- ReStep 2 -->
+        <mxCell id="restep2" value="&lt;b&gt;Step 2&lt;/b&gt;&lt;br&gt;Retrieve Signed Doc&lt;br&gt;&lt;br&gt;Retry: 3x each&lt;br&gt;Fail: Reprocess +1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFE0B2;strokeColor=#F39C12;fontSize=11;" vertex="1" parent="reproc-flow">
+          <mxGeometry x="640" y="70" width="160" height="120" as="geometry" />
+        </mxCell>
+        
+        <!-- ReStep 3 -->
+        <mxCell id="restep3" value="&lt;b&gt;Step 3&lt;/b&gt;&lt;br&gt;Upload Signed Doc&lt;br&gt;&lt;br&gt;Retry: 3x each&lt;br&gt;Fail: Reprocess +1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFE0B2;strokeColor=#F39C12;fontSize=11;" vertex="1" parent="reproc-flow">
+          <mxGeometry x="860" y="70" width="160" height="120" as="geometry" />
+        </mxCell>
+        
+        <!-- ReStep 4 -->
+        <mxCell id="restep4" value="&lt;b&gt;Step 4&lt;/b&gt;&lt;br&gt;Persist Updates&lt;br&gt;&lt;br&gt;Retry: 3x each&lt;br&gt;Fail: Support Team" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFE0B2;strokeColor=#F39C12;fontSize=11;" vertex="1" parent="reproc-flow">
+          <mxGeometry x="1080" y="70" width="160" height="120" as="geometry" />
+        </mxCell>
+        
+        <!-- Arrows for Reprocessing Flow -->
+        <mxCell id="arrow6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#F39C12;" edge="1" parent="reproc-flow" source="cron" target="lock">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#F39C12;" edge="1" parent="reproc-flow" source="lock" target="enrich">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#F39C12;" edge="1" parent="reproc-flow" source="enrich" target="restep2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#F39C12;" edge="1" parent="reproc-flow" source="restep2" target="restep3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#F39C12;" edge="1" parent="reproc-flow" source="restep3" target="restep4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <!-- External Systems -->
+        <mxCell id="ecta-api" value="ECTA API&lt;br&gt;Signed Documents" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#50C878;strokeColor=#2E7D32;fontColor=#FFFFFF;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1620" y="180" width="120" height="100" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="fims-api" value="FIMS&lt;br&gt;Object Safe" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#50C878;strokeColor=#2E7D32;fontColor=#FFFFFF;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1620" y="320" width="120" height="100" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="alts-db" value="Alts DB&lt;br&gt;PostgreSQL" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#9B59B6;strokeColor=#6A1B9A;fontColor=#FFFFFF;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1620" y="460" width="120" height="100" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="reproc-db" value="Failed Records&lt;br&gt;Reprocess Queue&lt;br&gt;Max 3 Attempts" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#E67E22;strokeColor=#D35400;fontColor=#FFFFFF;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1620" y="600" width="140" height="120" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="support" value="📧 Support Team&lt;br&gt;Manual Intervention" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E74C3C;strokeColor=#C0392B;fontColor=#FFFFFF;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1620" y="770" width="140" height="80" as="geometry" />
+        </mxCell>
+        
+        <!-- Connections to External Systems -->
+        <mxCell id="step2-ecta" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#50C878;dashed=1;dashPattern=5 5;" edge="1" parent="1" source="step2" target="ecta-api">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="step3-fims" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#50C878;dashed=1;dashPattern=5 5;" edge="1" parent="1" source="step3" target="fims-api">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="step1-db" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#9B59B6;dashed=1;dashPattern=5 5;" edge="1" parent="1" source="step1" target="alts-db">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="step4-db" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#9B59B6;dashed=1;dashPattern=5 5;" edge="1" parent="1" source="step4" target="alts-db">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="step2-reproc" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#E67E22;dashed=1;dashPattern=5 5;" edge="1" parent="1" source="step2" target="reproc-db">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="step3-reproc" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#E67E22;dashed=1;dashPattern=5 5;" edge="1" parent="1" source="step3" target="reproc-db">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="step4-support" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#E74C3C;dashed=1;dashPattern=5 5;" edge="1" parent="1" source="step4" target="support">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="lock-reproc" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#E67E22;dashed=1;dashPattern=5 5;" edge="1" parent="1" source="lock" target="reproc-db">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="restep2-ecta" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#50C878;dashed=1;dashPattern=5 5;" edge="1" parent="1" source="restep2" target="ecta-api">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="restep3-fims" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#50C878;dashed=1;dashPattern=5 5;" edge="1" parent="1" source="restep3" target="fims-api">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="restep4-db" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#9B59B6;dashed=1;dashPattern=5 5;" edge="1" parent="1" source="restep4" target="alts-db">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="enrich-db" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#9B59B6;dashed=1;dashPattern=5 5;" edge="1" parent="1" source="enrich" target="alts-db">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="restep2-reproc" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#E67E22;dashed=1;dashPattern=5 5;" edge="1" parent="1" source="restep2" target="reproc-db">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="restep3-reproc" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#E67E22;dashed=1;dashPattern=5 5;" edge="1" parent="1" source="restep3" target="reproc-db">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="restep4-support" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#E74C3C;dashed=1;dashPattern=5 5;" edge="1" parent="1" source="restep4" target="support">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

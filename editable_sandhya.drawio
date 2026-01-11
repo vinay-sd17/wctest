@@ -1,0 +1,190 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36" version="29.3.0">
+  <diagram name="Page-1" id="LJEs5sW_YPpa-XW7uLPv">
+    <mxGraphModel dx="3569" dy="1664" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="Jti32xeRkqCA-57MQn7t-4" parent="1" style="whiteSpace=wrap;strokeWidth=2;fontSize=15;fontStyle=1" value="Reprocessing Flow: Scheduled Task (Hourly - 3hrs)" vertex="1">
+          <mxGeometry height="1416" width="856" x="1165" y="45" as="geometry" />
+        </mxCell>
+        <mxCell id="Jti32xeRkqCA-57MQn7t-1" parent="1" style="whiteSpace=wrap;strokeWidth=2;fontSize=15;fontStyle=1" value="Reprocessing Queue" vertex="1">
+          <mxGeometry height="200" width="196" x="20" y="1230" as="geometry" />
+        </mxCell>
+        <mxCell id="Jti32xeRkqCA-57MQn7t-3" parent="1" style="whiteSpace=wrap;strokeWidth=2;fontSize=15;fontStyle=5" value="" vertex="1">
+          <mxGeometry height="1790" width="2120" x="-60" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="Jti32xeRkqCA-57MQn7t-6" parent="1" style="shape=cylinder3;boundedLbl=1;backgroundOutline=1;size=10;strokeWidth=2;whiteSpace=wrap;fontSize=15;fontStyle=1" value="Kafka Topic&#xa;APS - Alts eSign" vertex="1">
+          <mxGeometry height="101" width="125" x="494" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="Jti32xeRkqCA-57MQn7t-7" parent="1" style="whiteSpace=wrap;strokeWidth=2;fontSize=15;fontStyle=1" value="Step 0&#xa;Consume Message&#xa;&#xa;Retry: 3x&#xa;Fail: End" vertex="1">
+          <mxGeometry height="150" width="187" x="463" y="221" as="geometry" />
+        </mxCell>
+        <mxCell id="Jti32xeRkqCA-57MQn7t-72" edge="1" parent="1" source="Jti32xeRkqCA-57MQn7t-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.25;entryY=0;entryDx=0;entryDy=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" target="Jti32xeRkqCA-57MQn7t-9" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="341.5" y="496" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Jti32xeRkqCA-57MQn7t-87" edge="1" parent="1" source="Jti32xeRkqCA-57MQn7t-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="Jti32xeRkqCA-57MQn7t-20" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="830" y="496" />
+              <mxPoint x="830" y="1692" />
+            </Array>
+            <mxPoint x="771.5" y="496" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Jti32xeRkqCA-57MQn7t-8" parent="1" style="whiteSpace=wrap;strokeWidth=2;fontSize=15;fontStyle=1" value="Step 1&#xa;Persist Event to DB&#xa;&#xa;Retry: 3x&#xa;Fail: End" vertex="1">
+          <mxGeometry height="150" width="195" x="459" y="421" as="geometry" />
+        </mxCell>
+        <mxCell id="Jti32xeRkqCA-57MQn7t-48" edge="1" parent="1" source="Jti32xeRkqCA-57MQn7t-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=15;fontStyle=1" target="Jti32xeRkqCA-57MQn7t-18" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Jti32xeRkqCA-57MQn7t-62" edge="1" parent="1" source="Jti32xeRkqCA-57MQn7t-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=15;fontStyle=1" target="Jti32xeRkqCA-57MQn7t-10" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="623" y="732" />
+            </Array>
+            <mxPoint x="680" y="732.0000000000002" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Jti32xeRkqCA-57MQn7t-9" parent="1" style="whiteSpace=wrap;strokeWidth=2;fontSize=15;fontStyle=1" value="Step 2&#xa;Retrieve Signed Doc&#xa;&#xa;• Get ECTA Auth Token&#xa;• Call ECTA API&#xa;&#xa;Retry: 3x each&#xa;Fail: Reprocess Queue" vertex="1">
+          <mxGeometry height="222" width="222" x="323" y="621" as="geometry" />
+        </mxCell>
+        <mxCell id="Jti32xeRkqCA-57MQn7t-50" edge="1" parent="1" source="Jti32xeRkqCA-57MQn7t-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=15;fontStyle=1" target="Jti32xeRkqCA-57MQn7t-49" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Jti32xeRkqCA-57MQn7t-89" edge="1" parent="1" source="Jti32xeRkqCA-57MQn7t-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="Jti32xeRkqCA-57MQn7t-11" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="862.5" y="1004.0000000000005" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Jti32xeRkqCA-57MQn7t-10" parent="1" style="whiteSpace=wrap;strokeWidth=2;fontSize=15;fontStyle=1" value="Step 3&#xa;Upload Signed Doc&#xa;&#xa;• Get FIMS Auth Token&#xa;• Upload to FIMS&#xa;&#xa;Retry: 3x each&#xa;Fail: Reprocess Queue" vertex="1">
+          <mxGeometry height="222" width="219" x="514" y="893" as="geometry" />
+        </mxCell>
+        <mxCell id="Jti32xeRkqCA-57MQn7t-68" edge="1" parent="1" source="Jti32xeRkqCA-57MQn7t-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="Jti32xeRkqCA-57MQn7t-20" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1055" y="1692" />
+            </Array>
+            <mxPoint x="1055" y="1568" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Jti32xeRkqCA-57MQn7t-11" parent="1" style="whiteSpace=wrap;strokeWidth=2;fontSize=15;fontStyle=1" value="Step 4&#xa;Persist Final Updates&#xa;&#xa;• FIMS_AL_XREF table&#xa;• T_EDOC_TRANSM table&#xa;&#xa;Retry: 3x each&#xa;Fail: Support Team" vertex="1">
+          <mxGeometry height="176" width="190" x="960" y="1254" as="geometry" />
+        </mxCell>
+        <mxCell id="Jti32xeRkqCA-57MQn7t-63" edge="1" parent="1" source="Jti32xeRkqCA-57MQn7t-12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=15;fontStyle=1" target="Jti32xeRkqCA-57MQn7t-13" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Jti32xeRkqCA-57MQn7t-12" parent="1" style="whiteSpace=wrap;strokeWidth=2;fontSize=15;fontStyle=1" value="Scheduled Job&#xa;Runs Every Hour" vertex="1">
+          <mxGeometry height="78" width="184" x="1357" y="81" as="geometry" />
+        </mxCell>
+        <mxCell id="Jti32xeRkqCA-57MQn7t-74" edge="1" parent="1" source="Jti32xeRkqCA-57MQn7t-13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="Jti32xeRkqCA-57MQn7t-14" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1658.5" y="296" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Jti32xeRkqCA-57MQn7t-13" parent="1" style="whiteSpace=wrap;strokeWidth=2;fontSize=15;fontStyle=1" value="Lock &amp;amp; Identify&#xa;Failed Records" vertex="1">
+          <mxGeometry height="78" width="169" x="1365" y="257" as="geometry" />
+        </mxCell>
+        <mxCell id="Jti32xeRkqCA-57MQn7t-75" edge="1" parent="1" source="Jti32xeRkqCA-57MQn7t-14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="Jti32xeRkqCA-57MQn7t-15" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Jti32xeRkqCA-57MQn7t-81" edge="1" parent="1" source="Jti32xeRkqCA-57MQn7t-14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;endFill=0;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1750" y="496" />
+              <mxPoint x="1750" y="1690" />
+            </Array>
+            <mxPoint x="1670" y="1690" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Jti32xeRkqCA-57MQn7t-14" parent="1" style="whiteSpace=wrap;strokeWidth=2;fontSize=15;fontStyle=1" value="Enrich Data&#xa;&#xa;Retry: 3x&#xa;Fail: Reprocess +1" vertex="1">
+          <mxGeometry height="126" width="189" x="1459" y="433" as="geometry" />
+        </mxCell>
+        <mxCell id="Jti32xeRkqCA-57MQn7t-15" parent="1" style="whiteSpace=wrap;strokeWidth=2;fontSize=15;fontStyle=1" value="Step 2&#xa;Retrieve Signed Doc&#xa;&#xa;Retry: 3x each&#xa;Fail: Reprocess +1" vertex="1">
+          <mxGeometry height="150" width="202" x="1393" y="657" as="geometry" />
+        </mxCell>
+        <mxCell id="Jti32xeRkqCA-57MQn7t-85" edge="1" parent="1" source="Jti32xeRkqCA-57MQn7t-16" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="Jti32xeRkqCA-57MQn7t-17" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1842" y="1004" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Jti32xeRkqCA-57MQn7t-16" parent="1" style="whiteSpace=wrap;strokeWidth=2;fontSize=15;fontStyle=1" value="Step 3&#xa;Upload Signed Doc&#xa;&#xa;Retry: 3x each&#xa;Fail: Reprocess +1" vertex="1">
+          <mxGeometry height="150" width="193" x="1512" y="929" as="geometry" />
+        </mxCell>
+        <mxCell id="Jti32xeRkqCA-57MQn7t-83" edge="1" parent="1" source="Jti32xeRkqCA-57MQn7t-17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1889" y="1690" />
+              <mxPoint x="1260" y="1690" />
+            </Array>
+            <mxPoint x="1260" y="1690" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Jti32xeRkqCA-57MQn7t-17" parent="1" style="whiteSpace=wrap;strokeWidth=2;fontSize=15;fontStyle=1" value="Step 4&#xa;Persist Updates&#xa;&#xa;Retry: 3x each&#xa;Fail: Support Team" vertex="1">
+          <mxGeometry height="150" width="194" x="1792" y="1250" as="geometry" />
+        </mxCell>
+        <mxCell id="Jti32xeRkqCA-57MQn7t-18" parent="1" style="shape=cylinder3;boundedLbl=1;backgroundOutline=1;size=10;strokeWidth=2;whiteSpace=wrap;fontSize=15;fontStyle=1" value="ECTA API&#xa;Signed Documents" vertex="1">
+          <mxGeometry height="110" width="98.5" x="384.75" y="900" as="geometry" />
+        </mxCell>
+        <mxCell id="Jti32xeRkqCA-57MQn7t-20" parent="1" style="shape=cylinder3;boundedLbl=1;backgroundOutline=1;size=10;strokeWidth=2;whiteSpace=wrap;fontSize=15;fontStyle=1" value="Alts DB&#xa;PostgreSQL" vertex="1">
+          <mxGeometry height="124" width="114" x="1140" y="1630" as="geometry" />
+        </mxCell>
+        <mxCell id="Jti32xeRkqCA-57MQn7t-21" parent="1" style="shape=cylinder3;boundedLbl=1;backgroundOutline=1;size=10;strokeWidth=2;whiteSpace=wrap;fontSize=15;fontStyle=1" value="Failed Records&#xa;Max 3 Attempts" vertex="1">
+          <mxGeometry height="156" width="125" x="55" y="1274" as="geometry" />
+        </mxCell>
+        <mxCell id="Jti32xeRkqCA-57MQn7t-23" edge="1" parent="1" source="Jti32xeRkqCA-57MQn7t-6" style="curved=1;startArrow=none;endArrow=block;exitX=0.5;exitY=1;entryX=0.5;entryY=0;rounded=0;fontSize=15;fontStyle=1" target="Jti32xeRkqCA-57MQn7t-7" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Jti32xeRkqCA-57MQn7t-24" edge="1" parent="1" source="Jti32xeRkqCA-57MQn7t-7" style="curved=1;startArrow=none;endArrow=block;exitX=0.5;exitY=1;entryX=0.5;entryY=0;rounded=0;fontSize=15;fontStyle=1" target="Jti32xeRkqCA-57MQn7t-8" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Jti32xeRkqCA-57MQn7t-31" edge="1" parent="1" source="Jti32xeRkqCA-57MQn7t-15" style="curved=1;startArrow=none;endArrow=block;exitX=0.81;exitY=1;entryX=0.5;entryY=0;rounded=0;fontSize=15;fontStyle=1" target="Jti32xeRkqCA-57MQn7t-16" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1608" y="868" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Jti32xeRkqCA-57MQn7t-40" edge="1" parent="1" source="Jti32xeRkqCA-57MQn7t-13" style="curved=1;dashed=1;dashPattern=2 3;startArrow=none;endArrow=block;exitX=0.03;exitY=0.99;entryX=1;entryY=0.43;rounded=0;fontSize=15;fontStyle=1" target="Jti32xeRkqCA-57MQn7t-21" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1247" y="396" />
+              <mxPoint x="1247" y="1189" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Jti32xeRkqCA-57MQn7t-45" edge="1" parent="1" source="Jti32xeRkqCA-57MQn7t-15" style="curved=1;dashed=1;dashPattern=2 3;startArrow=none;endArrow=block;exitX=0.04;exitY=1;entryX=1;entryY=0.43;rounded=0;fontSize=15;fontStyle=1" target="Jti32xeRkqCA-57MQn7t-21" value="">
+          <mxGeometry relative="1" x="-0.0005" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="1325" y="1189" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Jti32xeRkqCA-57MQn7t-46" edge="1" parent="1" source="Jti32xeRkqCA-57MQn7t-16" style="curved=1;dashed=1;dashPattern=2 3;startArrow=none;endArrow=block;exitX=0;exitY=0.92;entryX=1;entryY=0.43;rounded=0;fontSize=15;fontStyle=1" target="Jti32xeRkqCA-57MQn7t-21" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1382" y="1152" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Jti32xeRkqCA-57MQn7t-49" parent="1" style="shape=cylinder3;boundedLbl=1;backgroundOutline=1;size=10;strokeWidth=2;whiteSpace=wrap;fontSize=15;fontStyle=1" value="FIMS&#xa;Object Safe" vertex="1">
+          <mxGeometry height="80" width="66" x="590.5" y="1150" as="geometry" />
+        </mxCell>
+        <mxCell id="Jti32xeRkqCA-57MQn7t-52" edge="1" parent="1" source="Jti32xeRkqCA-57MQn7t-21" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;exitPerimeter=0;endArrow=none;endFill=0;startArrow=classic;startFill=1;fontSize=15;fontStyle=1" target="Jti32xeRkqCA-57MQn7t-9" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="118" y="732" />
+            </Array>
+            <mxPoint x="118" y="1109.0000000000005" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
